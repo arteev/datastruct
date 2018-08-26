@@ -6,8 +6,8 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestStack(t *testing.T) {
-	s := New()
+func testStack(s Stack, t *testing.T) {
+	t.Helper()
 	_ = Stack(s)
 	assert.NotNil(t, s)
 
@@ -64,12 +64,10 @@ func benchmarkStackPush(s Stack, b *testing.B) {
 	}
 }
 func benchmarkStackPushPeek(s Stack, b *testing.B) {
-
 	v1 := "{}"
 	for i := 0; i < b.N; i++ {
 		s.Push(v1)
-		r, _ := s.Peek()
-		result = r
+		result, _ = s.Peek()
 	}
 }
 
@@ -77,19 +75,6 @@ func benchmarkStackPushPop(s Stack, b *testing.B) {
 	v1 := "{}"
 	for i := 0; i < b.N; i++ {
 		s.Push(v1)
-		r, _ := s.Pop()
-		result = r
+		result, _ = s.Pop()
 	}
-}
-
-func BenchmarkStackPush(b *testing.B) {
-	benchmarkStackPush(New(), b)
-}
-
-func BenchmarkStackPushPeek(b *testing.B) {
-	benchmarkStackPushPeek(New(), b)
-}
-
-func BenchmarkStackPushPop(b *testing.B) {
-	benchmarkStackPushPop(New(), b)
 }

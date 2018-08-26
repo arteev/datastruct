@@ -8,13 +8,13 @@ import (
 )
 
 func TestStackConcurrency(t *testing.T) {
-	s := NewConcurrency()
+	s := NewConcurrency(New())
 	assert.NotNil(t, s)
 	_ = Stack(s)
 }
 
-func TestConcurency(t *testing.T) {
-	stack := NewConcurrency()
+func TestConcurencyStackOnList(t *testing.T) {
+	stack := NewConcurrency(New())
 	wg := &sync.WaitGroup{}
 	for i := 0; i < 1000; i++ {
 		wg.Add(1)
@@ -32,14 +32,26 @@ func TestConcurency(t *testing.T) {
 	assert.Equal(t, 0, stack.Count())
 }
 
-func BenchmarkStackPushConcurrency(b *testing.B) {
-	benchmarkStackPush(NewConcurrency(), b)
+func BenchmarkStackOnListPushConcurrency(b *testing.B) {
+	benchmarkStackPush(NewConcurrency(New()), b)
 }
 
-func BenchmarkStackPushPeekConcurrency(b *testing.B) {
-	benchmarkStackPushPeek(NewConcurrency(), b)
+func BenchmarkStackOnListPushPeekConcurrency(b *testing.B) {
+	benchmarkStackPushPeek(NewConcurrency(New()), b)
 }
 
-func BenchmarkStackPushPopConcurrency(b *testing.B) {
-	benchmarkStackPushPop(NewConcurrency(), b)
+func BenchmarkStackOnListPushPopConcurrency(b *testing.B) {
+	benchmarkStackPushPop(NewConcurrency(New()), b)
+}
+
+func BenchmarkStackOnArrayPushConcurrency(b *testing.B) {
+	benchmarkStackPush(NewConcurrency(NewStackArray()), b)
+}
+
+func BenchmarkStackOnArrayPushPeekConcurrency(b *testing.B) {
+	benchmarkStackPushPeek(NewConcurrency(NewStackArray()), b)
+}
+
+func BenchmarkStackOnArrayPushPopConcurrency(b *testing.B) {
+	benchmarkStackPushPop(NewConcurrency(NewStackArray()), b)
 }

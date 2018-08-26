@@ -9,9 +9,9 @@ type StackConcurrency struct {
 }
 
 //NewConcurrency returns new StackConcurrency
-func NewConcurrency() *StackConcurrency {
+func NewConcurrency(s Stack) *StackConcurrency {
 	return &StackConcurrency{
-		Stack: New(),
+		Stack: s,
 	}
 }
 
